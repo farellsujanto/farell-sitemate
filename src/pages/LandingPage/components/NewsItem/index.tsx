@@ -28,16 +28,16 @@ const NewsItem = ({
     return (
         <Pressable onPress={onNewsItemPress}>
             <View style={styles.container}>
-            <Image
-                style={styles.image}
-                src={imgUrl} />
-            <View style={styles.textContainer}>
-                <Text style={styles.publishedAtText}>{formatDate(publishedAt)}</Text>
-                <Text style={styles.titleText}>{title}</Text>
-                <Text style={styles.descriptionText} numberOfLines={2}>{description}</Text>
-                <Text style={styles.authorText}>{author}</Text>
+                <Image
+                    style={styles.image}
+                    src={imgUrl} />
+                <View style={styles.textContainer}>
+                    <Text style={styles.publishedAtText}>{formatDate(publishedAt)}</Text>
+                    <Text style={styles.titleText}>{title}</Text>
+                    <Text style={styles.descriptionText} numberOfLines={2}>{description}</Text>
+                    <Text style={styles.authorText}>{author}</Text>
+                </View>
             </View>
-        </View>
         </Pressable>
     );
 };
