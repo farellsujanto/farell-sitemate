@@ -13,7 +13,6 @@ export default StyleSheet.create({
         flexGrow: 0,
         paddingHorizontal: 16,
         marginBottom: 16,
-        backgroundColor: 'green'
     },
     newsItemContainer: {
         paddingHorizontal: 16,

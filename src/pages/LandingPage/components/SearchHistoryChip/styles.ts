@@ -8,8 +8,7 @@ export default StyleSheet.create({
     },
     historyText: {
         fontSize: 10,
-        height: 14,
-        lineHeight: 14,
+        height: 20,
         color: '#303030',
     },
 });

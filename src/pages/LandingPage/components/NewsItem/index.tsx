@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image, Text, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { Image, Linking, Pressable, Text, View } from 'react-native';
 import styles from './styles';
 import { formatDate } from '../../../../utils/date_util';
 
@@ -9,6 +9,7 @@ interface NewsItemProps {
     author: string;
     imgUrl: string;
     publishedAt: string;
+    sourceUrl: string;
 };
 
 const NewsItem = ({
@@ -17,9 +18,16 @@ const NewsItem = ({
     author,
     imgUrl,
     publishedAt,
+    sourceUrl,
 }: NewsItemProps) => {
+
+    const onNewsItemPress = useCallback(() => {
+        Linking.openURL(sourceUrl)
+    }, [sourceUrl]);
+
     return (
-        <View style={styles.container}>
+        <Pressable onPress={onNewsItemPress}>
+            <View style={styles.container}>
             <Image
                 style={styles.image}
                 src={imgUrl} />
@@ -30,6 +38,7 @@ const NewsItem = ({
                 <Text style={styles.authorText}>{author}</Text>
             </View>
         </View>
+        </Pressable>
     );
 };
 

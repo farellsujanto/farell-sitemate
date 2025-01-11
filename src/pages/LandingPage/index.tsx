@@ -25,7 +25,7 @@ const LandingPage = () => {
         setSearchHistories([...searchHistories, newSearchText]);
     }, [searchHistories]);
 
-    const handleSearch = useCallback(debounce(async (newSearchText: string,) => {
+    const handleSearch = useCallback(debounce(async (newSearchText: string) => {
         try {
             if (!newSearchText) {
                 setArticles([]);
@@ -53,7 +53,8 @@ const LandingPage = () => {
                 description={item.description}
                 author={item.author}
                 imgUrl={item.urlToImage}
-                publishedAt={item.publishedAt} />
+                publishedAt={item.publishedAt}
+                sourceUrl={item.url} />
         );
     }, []);
     const NewsItemSeparatorComponent = useMemo(() => NewsItemSeparator, []);
