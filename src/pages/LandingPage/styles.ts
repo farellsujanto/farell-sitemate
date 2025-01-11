@@ -9,6 +9,10 @@ export default StyleSheet.create({
         paddingHorizontal: 16,
         marginBottom: 16,
     },
+    searchHistoryChipsContainer: {
+        paddingHorizontal: 16,
+        marginBottom: 16,
+    },
     newsItemContainer: {
         paddingHorizontal: 16,
     },
