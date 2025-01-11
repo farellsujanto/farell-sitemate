@@ -8,6 +8,8 @@ import { Articles, fetchNews } from './services/news_service';
 import NewsItemSeparator from './components/NewsItemSeparator';
 import SearchHistoryChip from './components/SearchHistoryChip';
 import SearchHistoryChipSeparator from './components/SearchHistoryChipSeparator';
+import { showToast } from '../../utils/notification_util';
+import NewsItemEmpty from './components/NewsItemEmpty';
 
 const LandingPage = () => {
 
@@ -19,16 +21,24 @@ const LandingPage = () => {
             return;
         }
         setSearchHistories([...searchHistories, newSearchText]);
-    }
-    , [searchHistories]);
+    } , [searchHistories]);
 
     const handleSearch = useCallback(debounce(async (newSearchText: string, ) => {
         try {
+            if (!newSearchText) {
+                setArticles([]);
+                return;
+            }
+
             const newArticles = await fetchNews(newSearchText);
             updateSearchHistories(newSearchText);
             setArticles(newArticles);
         } catch (error) {
-            // TODO: Handle error
+            if (error instanceof Error) {
+                showToast(error.message);
+                return;
+            }
+            showToast('An error occurred');
         }
     }, 250), [updateSearchHistories]);
 
@@ -43,6 +53,7 @@ const LandingPage = () => {
         );
     }, []);
     const NewsItemSeparatorComponent = useMemo(() => NewsItemSeparator, []);
+    const NewsItemEmptyComponent = useMemo(() => NewsItemEmpty, []);
 
     const renderSearchHistoryChip = useCallback(({ item }: { item: string }) => {
         return (
@@ -74,6 +85,7 @@ const LandingPage = () => {
                 style={styles.newsItemContainer}
                 renderItem={renderNewsItem}
                 ItemSeparatorComponent={NewsItemSeparatorComponent}
+                ListEmptyComponent={NewsItemEmptyComponent}
                 keyExtractor={(_, index) => `article-${index}`} />
         </View>
     );

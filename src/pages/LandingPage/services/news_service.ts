@@ -17,7 +17,6 @@ export interface Articles {
 };
 
 export async function fetchNews(query?: string): Promise<Articles[]> {
-    console.log(process.env.NEWS_API_KEY);
     const url = `https://newsapi.org/v2/everything?q=${query}&apiKey=${process.env.NEWS_API_KEY}`;
     const options = {
         method: 'GET',
