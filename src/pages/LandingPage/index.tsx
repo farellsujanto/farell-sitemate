@@ -10,30 +10,34 @@ import SearchHistoryChip from './components/SearchHistoryChip';
 import SearchHistoryChipSeparator from './components/SearchHistoryChipSeparator';
 import { showToast } from '../../utils/notification_util';
 import NewsItemEmpty from './components/NewsItemEmpty';
+import CircularProgressIndicator from '../../components/loaders/CircularProgressIndicator';
 
 const LandingPage = () => {
 
     const [articles, setArticles] = useState<Articles[]>();
     const [searchHistories, setSearchHistories] = useState<string[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
 
     const updateSearchHistories = useCallback((newSearchText: string) => {
         if (searchHistories.includes(newSearchText)) {
             return;
         }
         setSearchHistories([...searchHistories, newSearchText]);
-    } , [searchHistories]);
+    }, [searchHistories]);
 
-    const handleSearch = useCallback(debounce(async (newSearchText: string, ) => {
+    const handleSearch = useCallback(debounce(async (newSearchText: string,) => {
         try {
             if (!newSearchText) {
                 setArticles([]);
                 return;
             }
-
+            setIsLoading(true);
             const newArticles = await fetchNews(newSearchText);
+            setIsLoading(false);
             updateSearchHistories(newSearchText);
             setArticles(newArticles);
         } catch (error) {
+            setIsLoading(false);
             if (error instanceof Error) {
                 showToast(error.message);
                 return;
@@ -79,14 +83,18 @@ const LandingPage = () => {
                 renderItem={renderSearchHistoryChip}
                 ItemSeparatorComponent={SearchHistoryChipSeparatorComponent}
                 keyExtractor={(_, index) => `history-${index}`} />
-        
-            <FlatList
-                data={articles}
-                style={styles.newsItemContainer}
-                renderItem={renderNewsItem}
-                ItemSeparatorComponent={NewsItemSeparatorComponent}
-                ListEmptyComponent={NewsItemEmptyComponent}
-                keyExtractor={(_, index) => `article-${index}`} />
+
+            {isLoading ?
+                <CircularProgressIndicator /> :
+                <FlatList
+                    data={articles}
+                    style={styles.newsItemContainer}
+                    renderItem={renderNewsItem}
+                    ItemSeparatorComponent={NewsItemSeparatorComponent}
+                    ListEmptyComponent={NewsItemEmptyComponent}
+                    keyExtractor={(_, index) => `article-${index}`} />
+            }
+
         </View>
     );
 };

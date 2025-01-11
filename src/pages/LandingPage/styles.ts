@@ -10,8 +10,10 @@ export default StyleSheet.create({
         marginBottom: 16,
     },
     searchHistoryChipsContainer: {
+        flexGrow: 0,
         paddingHorizontal: 16,
         marginBottom: 16,
+        backgroundColor: 'green'
     },
     newsItemContainer: {
         paddingHorizontal: 16,
