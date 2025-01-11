@@ -1,0 +1,15 @@
+import { StyleSheet } from 'react-native';
+
+export default StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingVertical: 16,
+    },
+    searchInputContainer: {
+        paddingHorizontal: 16,
+        marginBottom: 16,
+    },
+    newsItemContainer: {
+        paddingHorizontal: 16,
+    },
+});
